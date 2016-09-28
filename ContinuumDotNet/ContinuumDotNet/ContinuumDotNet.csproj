@@ -80,7 +80,7 @@
     <Compile Include="Interfaces\Exceptions\IExceptionHandler.cs" />
     <Compile Include="Interfaces\Flow\Artifacts\IArtifact.cs" />
     <Compile Include="Interfaces\Flow\Artifacts\IArtifactManager.cs" />
-    <Compile Include="Interfaces\Flow\Packages\IPackage.cs" />
+    <Compile Include="Interfaces\Flow\FlowPackages\IPackage.cs" />
     <Compile Include="Interfaces\Flow\Pipelines\IPipelineInstance.cs" />
     <Compile Include="Interfaces\Flow\Pipelines\IPipelineInstanceManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
