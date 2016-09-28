@@ -10,9 +10,9 @@
     <description>VersionOne Continuum .NET library</description>
     <copyright>Copyright 2016</copyright>
     <dependencies>
-      <package id="Newtonsoft.Json" version="9.0.1" />
-      <package id="RestSharp" version="105.2.3"  />
-      <package id="StructureMap" version="4.4.1" />
+      <dependency  id="Newtonsoft.Json" version="9.0.1" />
+      <dependency  id="RestSharp" version="105.2.3"  />
+      <dependency  id="StructureMap" version="4.4.1" />
     </dependencies>
     <files>
       <file src="bin\Release\*.dll" target="lib" />
