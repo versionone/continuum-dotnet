@@ -18,6 +18,9 @@ namespace ContinuumDotNet.Flow.Pipelines
     {
         [JsonProperty("name")]
         public string Name { get; set; }
+
+        [JsonProperty("actions")]
+        public dynamic Actions { get; set; }
         public IContinuumConnection Connection { get; set; }
 
         public PipelineInstance(IContinuumConnection continuumConnection)

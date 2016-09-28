@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinuumDotNet.UnitTests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinuumDotNetCLI", "ContinuumDotNetCLI\ContinuumDotNetCLI.csproj", "{0AC512B5-A7C9-48C3-9EB2-E6F6A0EAFFFF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65DEC392-A545-43DC-964D-78E89E2922C3}"
+	ProjectSection(SolutionItems) = preProject
+		Package.nuspec = Package.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
