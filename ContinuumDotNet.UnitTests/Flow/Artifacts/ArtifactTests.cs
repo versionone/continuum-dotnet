@@ -33,7 +33,7 @@ namespace ContinuumDotNet.UnitTests.Flow.Artifacts
         }
 
         [TestMethod]
-        public void GettingAistOfArtifactsReturnsAList()
+        public void GettingAListOfArtifactsReturnsAList()
         {
             var continuumConnectionMock = new Mock<IContinuumConnection>();
             var artifactManager = new ArtifactManager(continuumConnectionMock.Object);
@@ -45,7 +45,7 @@ namespace ContinuumDotNet.UnitTests.Flow.Artifacts
         }
 
         [TestMethod]
-        public void GettingAistOfArtifactsDeserializesNameProperty()
+        public void GettingAListOfArtifactsDeserializesNameProperty()
         {
             var continuumConnectionMock = new Mock<IContinuumConnection>();
             var artifactManager = new ArtifactManager(continuumConnectionMock.Object);
@@ -57,7 +57,7 @@ namespace ContinuumDotNet.UnitTests.Flow.Artifacts
         }
 
         [TestMethod]
-        public void GettingAistOfArtifactsDeserializesVersionProperty()
+        public void GettingAListOfArtifactsDeserializesVersionProperty()
         {
             var continuumConnectionMock = new Mock<IContinuumConnection>();
             var artifactManager = new ArtifactManager(continuumConnectionMock.Object);
@@ -69,7 +69,7 @@ namespace ContinuumDotNet.UnitTests.Flow.Artifacts
         }
 
         [TestMethod]
-        public void GettingAistOfArtifactsDeserializesRevisionProperty()
+        public void GettingAListOfArtifactsDeserializesRevisionProperty()
         {
             var continuumConnectionMock = new Mock<IContinuumConnection>();
             var artifactManager = new ArtifactManager(continuumConnectionMock.Object);
@@ -81,7 +81,7 @@ namespace ContinuumDotNet.UnitTests.Flow.Artifacts
         }
 
         [TestMethod]
-        public void GettingAistOfArtifactsDeserializesCreateDateProperty()
+        public void GettingAListOfArtifactsDeserializesCreateDateProperty()
         {
             var continuumConnectionMock = new Mock<IContinuumConnection>();
             var artifactManager = new ArtifactManager(continuumConnectionMock.Object);
@@ -93,7 +93,7 @@ namespace ContinuumDotNet.UnitTests.Flow.Artifacts
         }
 
         [TestMethod]
-        public void GettingAistOfArtifactsDeserializesIdProperty()
+        public void GettingAListOfArtifactsDeserializesIdProperty()
         {
             var continuumConnectionMock = new Mock<IContinuumConnection>();
             var artifactManager = new ArtifactManager(continuumConnectionMock.Object);
