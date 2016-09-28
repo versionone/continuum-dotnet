@@ -14,8 +14,8 @@
       <dependency  id="RestSharp" version="105.2.3"  />
       <dependency  id="StructureMap" version="4.4.1" />
     </dependencies>
-    <files>
-      <file src="bin\Release\*.dll" target="lib" />
-    </files>
   </metadata>
+  <files>
+    <file src="bin\Release\*.dll" target="lib" />
+  </files>
 </package>
