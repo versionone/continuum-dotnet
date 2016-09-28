@@ -71,6 +71,7 @@
     <Compile Include="Connection\ConnectionTests.cs" />
     <Compile Include="Flow\Pipelines\PipelineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestData\Flow\Pipelines\SimplePipelineInstance.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ContinuumDotNet\ContinuumDotNet\ContinuumDotNet.csproj">

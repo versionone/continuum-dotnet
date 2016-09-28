@@ -27,5 +27,14 @@ namespace ContinuumDotNet.Flow.Pipelines
         {
             Connection = continuumConnection;
         }
+
+        [JsonProperty("_id")]
+        public string Id { get; set; }
+
+        [JsonProperty("code")]
+        public string FlightCode { get; set; }
+
+        [JsonProperty("number")]
+        public int Number { get; set; }
     }
 }

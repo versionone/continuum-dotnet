@@ -62,6 +62,9 @@
     <Compile Include="Exceptions\Flow\InvalidPipelineIdException.cs" />
     <Compile Include="Exceptions\MissingParameterException.cs" />
     <Compile Include="Flow\Pipelines\PipelineInstanceManager.cs" />
+    <Compile Include="Interfaces\Common\IHasNumber.cs" />
+    <Compile Include="Interfaces\Common\IHasFlightCode.cs" />
+    <Compile Include="Interfaces\Common\IHasId.cs" />
     <Compile Include="Interfaces\Connection\IHasConnection.cs" />
     <Compile Include="Exceptions\Connection\MissingTokenException.cs" />
     <Compile Include="Exceptions\Connection\MissingUrlException.cs" />

@@ -12,6 +12,7 @@ using RestSharp;
 using System.Net;
 using ContinuumDotNet.Exceptions;
 using ContinuumDotNet.Exceptions.Flow;
+using ContinuumDotNet.UnitTests.TestData.Flow.Pipelines;
 
 namespace ContinuumDotNet.UnitTests.Flow.Pipelines
 {
@@ -132,6 +133,50 @@ namespace ContinuumDotNet.UnitTests.Flow.Pipelines
             var continuumConnectionMock = new Mock<IContinuumConnection>();
             var pipelineInstance = new PipelineInstance(continuumConnectionMock.Object);
             Assert.IsNotNull(pipelineInstance.Connection);
+        }
+
+        [TestMethod]
+        public void NameIsProperlyDeserializedFromPipelineInstance()
+        {
+            var continuumConnectionMock = new Mock<IContinuumConnection>();
+            continuumConnectionMock.Setup(c => c.MakeRequest(It.IsAny<IRestRequest>()))
+                .Returns(new RestResponse() { StatusCode = (HttpStatusCode)200, Content = SimplePipelineInstance.DATA});
+            var pipelineInstanceManager = new PipelineInstanceManager(continuumConnectionMock.Object);
+            var pipelineInstance = pipelineInstanceManager.ById("ABCDE").Get();
+            Assert.AreEqual("SIMPLE_PIPELINE", pipelineInstance.Name);
+        }
+
+        [TestMethod]
+        public void IdIsProperlyDeserializedFromPipelineInstance()
+        {
+            var continuumConnectionMock = new Mock<IContinuumConnection>();
+            continuumConnectionMock.Setup(c => c.MakeRequest(It.IsAny<IRestRequest>()))
+                .Returns(new RestResponse() { StatusCode = (HttpStatusCode)200, Content = SimplePipelineInstance.DATA });
+            var pipelineInstanceManager = new PipelineInstanceManager(continuumConnectionMock.Object);
+            var pipelineInstance = pipelineInstanceManager.ById("ABCDE").Get();
+            Assert.AreEqual("57ea95e008a29402a371866b", pipelineInstance.Id);
+        }
+
+        [TestMethod]
+        public void CodeIsProperlyDeserializedFromPipelineInstance()
+        {
+            var continuumConnectionMock = new Mock<IContinuumConnection>();
+            continuumConnectionMock.Setup(c => c.MakeRequest(It.IsAny<IRestRequest>()))
+                .Returns(new RestResponse() { StatusCode = (HttpStatusCode)200, Content = SimplePipelineInstance.DATA });
+            var pipelineInstanceManager = new PipelineInstanceManager(continuumConnectionMock.Object);
+            var pipelineInstance = pipelineInstanceManager.ById("ABCDE").Get();
+            Assert.AreEqual("ABCDE", pipelineInstance.FlightCode);
+        }
+
+        [TestMethod]
+        public void NumberIsProperlyDeserializedFromPipelineInstance()
+        {
+            var continuumConnectionMock = new Mock<IContinuumConnection>();
+            continuumConnectionMock.Setup(c => c.MakeRequest(It.IsAny<IRestRequest>()))
+                .Returns(new RestResponse() { StatusCode = (HttpStatusCode)200, Content = SimplePipelineInstance.DATA });
+            var pipelineInstanceManager = new PipelineInstanceManager(continuumConnectionMock.Object);
+            var pipelineInstance = pipelineInstanceManager.ById("ABCDE").Get();
+            Assert.AreEqual(262, pipelineInstance.Number);
         }
     }
 }
