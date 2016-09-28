@@ -9,7 +9,7 @@ using ContinuumDotNet.Interfaces.Data;
 
 namespace ContinuumDotNet.Interfaces.Flow.Pipelines
 {
-    public interface IPipelineInstanceManager : IHasConnection, IHasQuery<PipelineInstance>
+    public interface IPipelineInstanceManager : IHasConnection, IHasQuery<PipelineInstance, List<PipelineInstance>>
     {
         IPipelineInstanceManager ById(string id);
     }

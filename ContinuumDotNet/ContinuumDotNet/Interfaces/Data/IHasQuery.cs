@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ContinuumDotNet.Interfaces.Data
 {
-    public interface IHasQuery<T>
+    public interface IHasQuery<T, U>
     {
-        T Get();
+        T GetOne();
+        U GetAll();
     }
 }

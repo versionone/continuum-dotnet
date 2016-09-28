@@ -61,7 +61,12 @@
     <Compile Include="Exceptions\ExceptionHandler.cs" />
     <Compile Include="Exceptions\Flow\InvalidPipelineIdException.cs" />
     <Compile Include="Exceptions\MissingParameterException.cs" />
+    <Compile Include="Flow\Artifacts\Artifact.cs" />
+    <Compile Include="Flow\Artifacts\ArtifactManager.cs" />
     <Compile Include="Flow\Pipelines\PipelineInstanceManager.cs" />
+    <Compile Include="Interfaces\Common\IHasRevision.cs" />
+    <Compile Include="Interfaces\Common\IHasVersion.cs" />
+    <Compile Include="Interfaces\Common\IHasName.cs" />
     <Compile Include="Interfaces\Common\IHasNumber.cs" />
     <Compile Include="Interfaces\Common\IHasFlightCode.cs" />
     <Compile Include="Interfaces\Common\IHasId.cs" />
@@ -70,8 +75,11 @@
     <Compile Include="Exceptions\Connection\MissingUrlException.cs" />
     <Compile Include="Flow\Pipelines\PipelineInstance.cs" />
     <Compile Include="Interfaces\Connection\IContinuumConnection.cs" />
-    <Compile Include="Interfaces\Data\IQueryable.cs" />
+    <Compile Include="Interfaces\Data\IHasQuery.cs" />
     <Compile Include="Interfaces\Exceptions\IExceptionHandler.cs" />
+    <Compile Include="Interfaces\Flow\Artifacts\IArtifact.cs" />
+    <Compile Include="Interfaces\Flow\Artifacts\IArtifactManager.cs" />
+    <Compile Include="Interfaces\Flow\Packages\IPackage.cs" />
     <Compile Include="Interfaces\Flow\Pipelines\IPipelineInstance.cs" />
     <Compile Include="Interfaces\Flow\Pipelines\IPipelineInstanceManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

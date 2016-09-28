@@ -9,5 +9,6 @@ namespace ContinuumDotNet.Api.Flow
     public class Parameters
     {
         public static string PIPELINE_ID = "pi";
+        public static string ARTIFACT_NAME = "name";
     }
 }

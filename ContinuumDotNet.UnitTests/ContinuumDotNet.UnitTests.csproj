@@ -69,8 +69,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Connection\ConnectionTests.cs" />
+    <Compile Include="Flow\Artifacts\ArtifactTests.cs" />
     <Compile Include="Flow\Pipelines\PipelineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestData\Flow\Artifacts\UltimateArtifactList.cs" />
     <Compile Include="TestData\Flow\Pipelines\SimplePipelineInstance.cs" />
   </ItemGroup>
   <ItemGroup>

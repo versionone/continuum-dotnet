@@ -13,12 +13,12 @@ using RestSharp;
 
 namespace ContinuumDotNet.Data
 {
-    public class QueryBase<T>
+    public class QueryBase<T, U>
     {
         public IContinuumConnection Connection { get; set; }
 
         internal RestRequest _restRequest;
-        public T Get()
+        public T GetOne()
         {
             var exceptionHandler = new ExceptionHandler();
             var response = Connection.MakeRequest(_restRequest);
@@ -46,6 +46,37 @@ namespace ContinuumDotNet.Data
             }
             dynamic content = JsonConvert.DeserializeObject(response.Content);
             var json = JsonConvert.DeserializeObject<T>(content.Response.ToString());
+            return json;
+        }
+
+        public U GetAll()
+        {
+            var exceptionHandler = new ExceptionHandler();
+            var response = Connection.MakeRequest(_restRequest);
+
+            var statusCodeId = (int)response.StatusCode;
+            if (statusCodeId != 200)
+            {
+                switch ((int)response.StatusCode)
+                {
+                    case 280:
+                        throw exceptionHandler.FindError(response.Content);
+
+                    case 400:
+                        dynamic errorContent = JsonConvert.DeserializeObject(response.Content);
+                        throw exceptionHandler.FindError((string)errorContent.ErrorCode,
+                            (string)errorContent.ErrorDetail);
+
+                    case (int)HttpStatusCode.Unauthorized:
+                        throw new UnauthorizedAccessException();
+
+                    default:
+                        throw new Exception();
+
+                }
+            }
+            dynamic content = JsonConvert.DeserializeObject(response.Content);
+            var json = JsonConvert.DeserializeObject<U>(content.Response.ToString());
             return json;
         }
     }

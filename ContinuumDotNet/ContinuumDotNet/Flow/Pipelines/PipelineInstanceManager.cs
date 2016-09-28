@@ -16,7 +16,7 @@ using RestSharp;
 
 namespace ContinuumDotNet.Flow.Pipelines
 {
-    public class PipelineInstanceManager : QueryBase<PipelineInstance>, IPipelineInstanceManager
+    public class PipelineInstanceManager : QueryBase<PipelineInstance, List<PipelineInstance>>, IPipelineInstanceManager
     {
         public PipelineInstanceManager(IContinuumConnection continuumConnection)
         {
