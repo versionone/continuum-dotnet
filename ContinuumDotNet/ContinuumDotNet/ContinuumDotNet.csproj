@@ -64,6 +64,7 @@
     <Compile Include="Flow\Artifacts\Artifact.cs" />
     <Compile Include="Flow\Artifacts\ArtifactManager.cs" />
     <Compile Include="Flow\Pipelines\PipelineInstanceManager.cs" />
+    <Compile Include="Interfaces\Common\IHasCreationDate.cs" />
     <Compile Include="Interfaces\Common\IHasRevision.cs" />
     <Compile Include="Interfaces\Common\IHasVersion.cs" />
     <Compile Include="Interfaces\Common\IHasName.cs" />
