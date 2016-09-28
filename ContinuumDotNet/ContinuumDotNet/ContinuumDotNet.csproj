@@ -57,6 +57,7 @@
     <Compile Include="Api\Flow\Endpoints.cs" />
     <Compile Include="Api\Flow\Parameters.cs" />
     <Compile Include="Connection\ContinuumConnection.cs" />
+    <Compile Include="Data\QueryBase.cs" />
     <Compile Include="Exceptions\ExceptionHandler.cs" />
     <Compile Include="Exceptions\Flow\InvalidPipelineIdException.cs" />
     <Compile Include="Exceptions\MissingParameterException.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Exceptions\Connection\MissingUrlException.cs" />
     <Compile Include="Flow\Pipelines\PipelineInstance.cs" />
     <Compile Include="Interfaces\Connection\IContinuumConnection.cs" />
+    <Compile Include="Interfaces\Data\IQueryable.cs" />
     <Compile Include="Interfaces\Exceptions\IExceptionHandler.cs" />
     <Compile Include="Interfaces\Flow\Pipelines\IPipelineInstance.cs" />
     <Compile Include="Interfaces\Flow\Pipelines\IPipelineInstanceManager.cs" />
@@ -74,7 +76,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Flow\Data\Builders\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

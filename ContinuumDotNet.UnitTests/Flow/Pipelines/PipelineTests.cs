@@ -76,7 +76,7 @@ namespace ContinuumDotNet.UnitTests.Flow.Pipelines
             continuumConnectionMock.Setup(c => c.MakeRequest(It.IsAny<IRestRequest>()))
                 .Returns(new RestResponse() { StatusCode = (HttpStatusCode)200, Content = "{ \"Response\": {\"name\": \"Test\"}}"});
 
-            pipelineInstanceManager.Get("abcde");
+            pipelineInstanceManager.ById("abcde").Get();
             continuumConnectionMock.Verify(a => a.MakeRequest(It.IsAny<IRestRequest>()), Times.Once);
         }
 
@@ -89,7 +89,7 @@ namespace ContinuumDotNet.UnitTests.Flow.Pipelines
             continuumConnectionMock.Setup(c => c.MakeRequest(It.IsAny<IRestRequest>()))
                 .Returns(new RestResponse() { StatusCode = (HttpStatusCode)280 , Content = @"Pipeline Instance not found using identifier [ABCDE]" });
 
-            pipelineInstanceManager.Get("ABCDE");
+            pipelineInstanceManager.ById("ABCDE").Get();
         }
 
         [TestMethod]
@@ -101,7 +101,7 @@ namespace ContinuumDotNet.UnitTests.Flow.Pipelines
             continuumConnectionMock.Setup(c => c.MakeRequest(It.IsAny<IRestRequest>()))
                 .Returns(new RestResponse() { StatusCode = (HttpStatusCode)400, Content = "{\n    \"ErrorCode\": \"EmptyParameter\",\n    \"ErrorDetail\": \"Required parameter 'pi' empty.\",\n    \"ErrorMessage\": \"\",\n    \"Method\": \"get_pipelineinstance\",\n    \"Response\": \"\"\n}" });
 
-            pipelineInstanceManager.Get("");
+            pipelineInstanceManager.ById("").Get();
         }
 
         [TestMethod]
@@ -112,7 +112,7 @@ namespace ContinuumDotNet.UnitTests.Flow.Pipelines
             var pipelineInstanceManager = new PipelineInstanceManager(continuumConnectionMock.Object);
             continuumConnectionMock.Setup(c => c.MakeRequest(It.IsAny<IRestRequest>()))
                 .Returns(new RestResponse() { StatusCode = (HttpStatusCode)401 });
-            pipelineInstanceManager.Get("");
+            pipelineInstanceManager.ById("").Get();
         }
 
         [TestMethod]
@@ -123,9 +123,15 @@ namespace ContinuumDotNet.UnitTests.Flow.Pipelines
             var pipelineInstanceManager = new PipelineInstanceManager(continuumConnectionMock.Object);
             continuumConnectionMock.Setup(c => c.MakeRequest(It.IsAny<IRestRequest>()))
                 .Returns(new RestResponse() { StatusCode = (HttpStatusCode)281 });
-            pipelineInstanceManager.Get("ABCDEF");
+            pipelineInstanceManager.ById("ABCDEF").Get();
         }
 
-
+        [TestMethod]
+        public void InstantiatingPipelineInstanceWithConnectionPersists()
+        {
+            var continuumConnectionMock = new Mock<IContinuumConnection>();
+            var pipelineInstance = new PipelineInstance(continuumConnectionMock.Object);
+            Assert.IsNotNull(pipelineInstance.Connection);
+        }
     }
 }
