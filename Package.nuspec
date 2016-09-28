@@ -16,6 +16,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\*.dll" target="lib" />
+    <file src="ContinuumDotNet\ContinuumDotNet\bin\Release\*.dll" target="lib" />
   </files>
 </package>
