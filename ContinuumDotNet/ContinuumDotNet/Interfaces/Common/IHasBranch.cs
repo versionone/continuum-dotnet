@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContinuumDotNet.Exceptions.Connection
+namespace ContinuumDotNet.Interfaces.Common
 {
-    public class MissingUrlException : Exception
+    public interface IHasBranch
     {
+        string BranchName { get; set; }
     }
 }

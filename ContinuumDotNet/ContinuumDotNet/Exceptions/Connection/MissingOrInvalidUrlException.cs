@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContinuumDotNet.Interfaces.Common
+namespace ContinuumDotNet.Exceptions.Connection
 {
-    public interface IHasFlightCode
+    public class MissingOrInvalidUrlException : Exception
     {
-        string FlightCode { get; set;  }
     }
 }

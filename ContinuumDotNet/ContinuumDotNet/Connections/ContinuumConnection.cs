@@ -1,21 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using ContinuumDotNet.Exceptions.Connection;
 using ContinuumDotNet.Interfaces.Connection;
 using RestSharp;
 
-namespace ContinuumDotNet.Connection
+namespace ContinuumDotNet.Connections
 {
     public class ContinuumConnection : IContinuumConnection
     {
         private IRestClient _restClient { get; set; }
 
-        public ContinuumConnection(IRestClient restClient, string token)
+        public ContinuumConnection(string url, string token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                throw new MissingTokenException();
+            }
+
+            if (string.IsNullOrEmpty(url) || !Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
+            {
+                throw new MissingOrInvalidUrlException();
+            }
+            _restClient = new RestClient() {BaseUrl = new Uri(url)};
+            _restClient.AddDefaultHeader("Authorization", $"Token {token}");
+            Trace.WriteLine($"Setting authorization token to {token}");
+        }
+
+        internal ContinuumConnection(IRestClient restClient, string token)
         {
             if (string.IsNullOrEmpty(token))
             {
@@ -30,7 +41,7 @@ namespace ContinuumDotNet.Connection
         {
             if (_restClient.BaseUrl == null || _restClient.BaseUrl.ToString().Length == 0)
             {
-                throw new MissingUrlException();
+                throw new MissingOrInvalidUrlException();
             }
 
             return _restClient.Execute(request);

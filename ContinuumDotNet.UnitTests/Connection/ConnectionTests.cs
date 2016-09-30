@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using ContinuumDotNet.Connection;
+using ContinuumDotNet.Connections;
 using ContinuumDotNet.Exceptions.Connection;
 using ContinuumDotNet.Flow.Pipelines;
 using ContinuumDotNet.Interfaces.Connection;
@@ -27,7 +27,7 @@ namespace ContinuumDotNet.UnitTests.Connection
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MissingUrlException))]
+        [ExpectedException(typeof(MissingOrInvalidUrlException))]
         public void MissingUrlThrowsError()
         {
             var restClient = new RestClient();

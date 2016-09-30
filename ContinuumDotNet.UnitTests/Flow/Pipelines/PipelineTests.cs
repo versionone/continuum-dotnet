@@ -2,7 +2,6 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
-using ContinuumDotNet.Connection;
 using ContinuumDotNet.Exceptions.Connection;
 using ContinuumDotNet.Flow.Pipelines;
 using ContinuumDotNet.Interfaces.Connection;

@@ -38,12 +38,17 @@
       <HintPath>..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.1.605.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StackExchange.Redis.1.1.605\lib\net45\StackExchange.Redis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=4.4.1.451, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\StructureMap.4.4.1\lib\net45\StructureMap.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,14 +61,19 @@
     <Compile Include="Api\Exceptions\ExceptionMap.cs" />
     <Compile Include="Api\Flow\Endpoints.cs" />
     <Compile Include="Api\Flow\Parameters.cs" />
-    <Compile Include="Connection\ContinuumConnection.cs" />
+    <Compile Include="Connections\ContinuumConnection.cs" />
+    <Compile Include="Connections\RedisCacheConnection.cs" />
     <Compile Include="Data\QueryBase.cs" />
+    <Compile Include="Deployments\CacheKeyExtensions.cs" />
+    <Compile Include="Deployments\DeployedSite.cs" />
+    <Compile Include="Deployments\DeploymentManager.cs" />
     <Compile Include="Exceptions\ExceptionHandler.cs" />
     <Compile Include="Exceptions\Flow\InvalidPipelineIdException.cs" />
     <Compile Include="Exceptions\MissingParameterException.cs" />
     <Compile Include="Flow\Artifacts\Artifact.cs" />
     <Compile Include="Flow\Artifacts\ArtifactManager.cs" />
     <Compile Include="Flow\Pipelines\PipelineInstanceManager.cs" />
+    <Compile Include="Interfaces\Common\IHasBranch.cs" />
     <Compile Include="Interfaces\Common\IHasCreationDate.cs" />
     <Compile Include="Interfaces\Common\IHasRevision.cs" />
     <Compile Include="Interfaces\Common\IHasVersion.cs" />
@@ -73,10 +83,13 @@
     <Compile Include="Interfaces\Common\IHasId.cs" />
     <Compile Include="Interfaces\Connection\IHasConnection.cs" />
     <Compile Include="Exceptions\Connection\MissingTokenException.cs" />
-    <Compile Include="Exceptions\Connection\MissingUrlException.cs" />
+    <Compile Include="Exceptions\Connection\MissingOrInvalidUrlException.cs" />
     <Compile Include="Flow\Pipelines\PipelineInstance.cs" />
     <Compile Include="Interfaces\Connection\IContinuumConnection.cs" />
+    <Compile Include="Interfaces\Connection\ICacheConnection.cs" />
     <Compile Include="Interfaces\Data\IHasQuery.cs" />
+    <Compile Include="Interfaces\Deployments\IDeployedSite.cs" />
+    <Compile Include="Interfaces\Deployments\IDeploymentManager.cs" />
     <Compile Include="Interfaces\Exceptions\IExceptionHandler.cs" />
     <Compile Include="Interfaces\Flow\Artifacts\IArtifact.cs" />
     <Compile Include="Interfaces\Flow\Artifacts\IArtifactManager.cs" />
