@@ -19,7 +19,7 @@ namespace ContinuumDotNet.Connections
 
             if (string.IsNullOrEmpty(url) || !Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
             {
-                throw new MissingOrInvalidUrlException();
+                throw new MissingOrInvalidUrlException(url);
             }
             _restClient = new RestClient() {BaseUrl = new Uri(url)};
             _restClient.AddDefaultHeader("Authorization", $"Token {token}");
@@ -41,7 +41,7 @@ namespace ContinuumDotNet.Connections
         {
             if (_restClient.BaseUrl == null || _restClient.BaseUrl.ToString().Length == 0)
             {
-                throw new MissingOrInvalidUrlException();
+                throw new MissingOrInvalidUrlException(_restClient.BaseUrl==null ? string.Empty : _restClient.BaseUrl.ToString());
             }
 
             return _restClient.Execute(request);

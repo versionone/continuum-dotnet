@@ -8,6 +8,7 @@ using CommandLine;
 using ContinuumDotNet.Api;
 using ContinuumDotNet.Connections;
 using ContinuumDotNet.Deployments;
+using ContinuumDotNet.Deployments.Installers;
 using ContinuumDotNet.Flow.Artifacts;
 using ContinuumDotNet.Flow.Pipelines;
 using ContinuumDotNetCLI.CommandLineOptions;
@@ -18,6 +19,9 @@ namespace ContinuumDotNetCLI
     {
         static void Main(string[] args)
         {
+            var lifecycleInstaller = new LifecycleInstaller();
+            lifecycleInstaller.WithVersion("test");
+
             CommonOptions commonOptions = new CommonOptions();
             Parser.Default.ParseArguments<CommonOptions>(args).MapResult((CommonOptions opts) =>
             {

@@ -89,9 +89,9 @@
     <Compile Include="Interfaces\Connection\IContinuumConnection.cs" />
     <Compile Include="Interfaces\Connection\ICacheConnection.cs" />
     <Compile Include="Interfaces\Data\IHasQuery.cs" />
+    <Compile Include="Interfaces\Deployments\IInstaller.cs" />
     <Compile Include="Interfaces\Deployments\IDeployedSite.cs" />
     <Compile Include="Interfaces\Deployments\IDeploymentManager.cs" />
-    <Compile Include="Interfaces\Deployments\Installers\ILifecycleInstaller.cs" />
     <Compile Include="Interfaces\Exceptions\IExceptionHandler.cs" />
     <Compile Include="Interfaces\Flow\Artifacts\IArtifact.cs" />
     <Compile Include="Interfaces\Flow\Artifacts\IArtifactManager.cs" />

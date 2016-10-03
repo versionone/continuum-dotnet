@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using ContinuumDotNet.Deployments;
+using ContinuumDotNet.Deployments.Installers;
 using ContinuumDotNet.Exceptions;
+using ContinuumDotNet.Exceptions.Connection;
 using ContinuumDotNet.Exceptions.Flow;
 using ContinuumDotNet.Flow.Pipelines;
 using ContinuumDotNet.Interfaces.Connection;
@@ -170,6 +172,135 @@ namespace ContinuumDotNet.UnitTests.Deployments
             var deploymentManager = new DeploymentManager(cacheConnectionMock.Object);
             var site = deploymentManager.CreateDeployedSite();
             Assert.AreEqual(site.CreationDateInUtc.Date, DateTime.UtcNow.Date);
+        }
+
+        [TestMethod]
+        public void CallingWithInstanceSetsInstance()
+        {
+            const string instanceName = "testInstance";
+            var lifecycleInstaller = new LifecycleInstaller().WithInstance(instanceName);
+            Assert.AreEqual(instanceName, lifecycleInstaller.Instance);
+        }
+
+        [TestMethod]
+        public void CallingWithProductSetsProduct()
+        {
+            const string productName = "testProduct";
+            var lifecycleInstaller = new LifecycleInstaller().WithProduct(productName);
+            Assert.AreEqual(productName, lifecycleInstaller.Product);
+        }
+
+        [TestMethod]
+        public void CallingWithVersionSetsVersion()
+        {
+            const string version = "testVersion";
+            var lifecycleInstaller = new LifecycleInstaller().WithVersion(version);
+            Assert.AreEqual(version, lifecycleInstaller.Version);
+        }
+
+        [TestMethod]
+        public void CallingWithServerNameSetsServerName()
+        {
+            const string serverName = "testserver";
+            var lifecycleInstaller = new LifecycleInstaller().WithServerName(serverName);
+            Assert.AreEqual(serverName, lifecycleInstaller.ServerName);
+        }
+
+        [TestMethod]
+        public void CallingWithFlightCodeSetsFlightCode()
+        {
+            const string flightCode = "flightcode";
+            var lifecycleInstaller = new LifecycleInstaller().WithFlightCode(flightCode);
+            Assert.AreEqual(flightCode, lifecycleInstaller.FlightCode);
+        }
+
+        [TestMethod]
+        public void CallingWithTemporaryWorkFolderSetsTemporaryWorkFolder()
+        {
+            const string temporaryWorkFolder = @"c:\temp";
+            var lifecycleInstaller = new LifecycleInstaller().WithTemporaryWorkFolder(temporaryWorkFolder);
+            Assert.AreEqual(temporaryWorkFolder, lifecycleInstaller.TemporaryWorkFolder);
+        }
+
+        [TestMethod]
+        public void CallingWithBaseArtifactoryUrlSetsWithBaseArtifactoryUrl()
+        {
+            const string baseUrl = @"http://url";
+            var lifecycleInstaller = new LifecycleInstaller().WithBaseArtifactoryUrl(baseUrl);
+            Assert.AreEqual(baseUrl, lifecycleInstaller.BaseArtifactoryUrl);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof (MissingOrInvalidUrlException))]
+        public void CallingWithBaseArtifactoryUrlWithABadUrlThrowsMissingOrInvalidUrlException()
+        {
+            const string baseUrl = @"httpThisshouldnotwork";
+            var lifecycleInstaller = new LifecycleInstaller().WithBaseArtifactoryUrl(baseUrl);
+            Assert.AreEqual(baseUrl, lifecycleInstaller.BaseArtifactoryUrl);
+        }
+
+        [TestMethod]
+        public void CallingWithDemoDataRepositoryNameSetsDemoDataRepositoryName()
+        {
+            const string demoDataRepositoryName = @"demo-data-repo";
+            var lifecycleInstaller = new LifecycleInstaller().WithDemoDataRepositoryName(demoDataRepositoryName);
+            Assert.AreEqual(demoDataRepositoryName, lifecycleInstaller.DemoDataRepositoryName);
+        }
+
+        [TestMethod]
+        public void CallingWithInstallerRepositoryNameSetsInstallerRepositoryName()
+        {
+            const string installerRepositoryName = @"installer-repo";
+            var lifecycleInstaller = new LifecycleInstaller().WithInstallerRepositoryName(installerRepositoryName);
+            Assert.AreEqual(installerRepositoryName, lifecycleInstaller.InstallerRepositoryName);
+        }
+
+        [TestMethod]
+        public void CallingWithBuildSupportFilesRepositoryNameSetsBuildSupprtFilesRepositoryName()
+        {
+            const string buildSupportFilesRepositoryName = @"build-support-repo";
+            var lifecycleInstaller = new LifecycleInstaller().WithBuildSupportFilesRepositoryName(buildSupportFilesRepositoryName);
+            Assert.AreEqual(buildSupportFilesRepositoryName, lifecycleInstaller.BuildSupportFilesRepositoryName);
+        }
+
+        [TestMethod]
+        public void CallingWithLicenseFilenameSetsLicenseFilename()
+        {
+            const string licenseFilename = @"license";
+            var lifecycleInstaller = new LifecycleInstaller().WithLicenseFilename(licenseFilename);
+            Assert.AreEqual(licenseFilename, lifecycleInstaller.LicenseFilename);
+        }
+
+        [TestMethod]
+        public void CallingWithInstallerFilenameSetsInstallerFilename()
+        {
+            const string installerFilename = "filename";
+            var lifecycleInstaller = new LifecycleInstaller().WithInstallerFilename(installerFilename);
+            Assert.AreEqual(installerFilename, lifecycleInstaller.InstallerFilename);
+        }
+
+        [TestMethod]
+        public void CanAddAParameter()
+        {
+            var parameter = "parameter";
+            var value = "value";
+            var lifecycleInstaller = new LifecycleInstaller().WithAdditionalParameter(parameter, value);
+            Assert.IsTrue(lifecycleInstaller.AdditionalParameters.ContainsKey(parameter) &&
+                          lifecycleInstaller.AdditionalParameters.Count == 1 &&
+                          lifecycleInstaller.AdditionalParameters[parameter].Equals(value));;
+        }
+
+        [TestMethod]
+        public void AddingAParameterTwiceOverwritesPreviousValue()
+        {
+            var parameter = "parameter";
+            var oldValue = "vaoldlue";
+            var newValue = "newvalue";
+            var lifecycleInstaller = new LifecycleInstaller().WithAdditionalParameter(parameter, oldValue);
+            lifecycleInstaller.WithAdditionalParameter(parameter, newValue);
+            Assert.IsTrue(lifecycleInstaller.AdditionalParameters.ContainsKey(parameter) &&
+                          lifecycleInstaller.AdditionalParameters.Count == 1 &&
+                          lifecycleInstaller.AdditionalParameters[parameter].Equals(newValue)); ;
         }
     }
 }
