@@ -18,32 +18,17 @@ namespace ContinuumDotNet.UnitTests.Deployments
     public class DeploymentTests
     {
        
-        [TestMethod]
-        public void GettingAListOfDeploymentsByServerReturnsFilteredList()
-        {
-            var _cacheConnectionMock = new Mock<ICacheConnection>();
-            const string  TEST_SERVER = "SVR_V1HOSTDEV01";
-            _cacheConnectionMock.Setup(a => a.GetList(TEST_SERVER))
-                .Returns(new List<string>() {"ABCDE", "DEFIJ"});
-            var deploymentManager = new DeploymentManager(_cacheConnectionMock.Object);
-            var sites = deploymentManager.WithServer("V1HOSTDEV01").GetAll();
-            Assert.IsTrue(sites.FirstOrDefault(s => s.FlightCode == "ABCDE") != null);
-        }
-
-        [TestMethod]
-        public void GettingADeploymentByFlightCodeReturnsFilteredList()
-        {
-            var _cacheConnectionMock = new Mock<ICacheConnection>();
-            const string TEST_FLIGHT_CODE = "FC_ABCDE";
-            const string TEST_SERVER  = "SVR_V1HOSTDEV01";
-            _cacheConnectionMock.Setup(a => a.GetList(TEST_FLIGHT_CODE))
-                .Returns(new List<string>() { "V1HOSTDEV01:Ultimate", "V1HOSTDEV02:Enterprise" });
-            _cacheConnectionMock.Setup(a => a.GetList(TEST_SERVER))
-                .Returns(new List<string>() { "ABCDE", "FGHIJ" });
-            var deploymentManager = new DeploymentManager(_cacheConnectionMock.Object);
-            var sites = deploymentManager.WithFlightCode("ABCDE").GetAll();
-            Assert.IsTrue(sites.FirstOrDefault(s => s.ServerName == "V1HOSTDEV01" && s.Product == "Ultimate") != null);
-        }
+        //[TestMethod]
+        //public void GettingAListOfDeploymentsByServerReturnsFilteredList()
+        //{
+        //    var _cacheConnectionMock = new Mock<ICacheConnection>();
+        //    const string  TEST_SERVER = "SVR_V1HOSTDEV01";
+        //    _cacheConnectionMock.Setup(a => a.GetList(TEST_SERVER))
+        //        .Returns(new List<string>() {"ABCDE", "DEFIJ"});
+        //    var deploymentManager = new DeploymentManager(_cacheConnectionMock.Object);
+        //    var sites = deploymentManager.WithServer("V1HOSTDEV01").GetAll();
+        //    Assert.IsTrue(sites.FirstOrDefault(s => s.FlightCode == "ABCDE") != null);
+        //}
 
         [TestMethod]
         public void GettingADeploymentByEmptyFlightCodeReturnsEmptyList()
@@ -154,8 +139,37 @@ namespace ContinuumDotNet.UnitTests.Deployments
                 .WithFlightCode("ABCDE")
                 .WithProduct("Ultimate")
                 .Deploy();
-            cacheConnectionMock.Verify(c => c.PushLeft(It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(2));
-            cacheConnectionMock.Verify(c => c.UpsertHash(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(2));
+            cacheConnectionMock.Verify(c => c.PushLeft(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            cacheConnectionMock.Verify(c => c.UpsertHash(It.IsAny<string>(), It.IsAny<object>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void CallingWithBranchNameUpdatesBranchName()
+        {
+            var branchName = "MYBRANCH";
+            var cacheConnectionMock = new Mock<ICacheConnection>();
+            var deploymentManager = new DeploymentManager(cacheConnectionMock.Object);
+            var site = deploymentManager.CreateDeployedSite().WithBranchName(branchName);
+            Assert.AreEqual(branchName, site.BranchName);
+        }
+
+        [TestMethod]
+        public void PassingCreationDateInUtcUpdatesCreationDate()
+        {
+            var cacheConnectionMock = new Mock<ICacheConnection>();
+            var deploymentManager = new DeploymentManager(cacheConnectionMock.Object);
+            var dateTimeNowInUtc = DateTime.UtcNow;
+            var site = deploymentManager.CreateDeployedSite().WithCreationDateInUtc(dateTimeNowInUtc);
+            Assert.AreEqual(dateTimeNowInUtc, site.CreationDateInUtc);
+        }
+
+        [TestMethod]
+        public void PassingNoCreationDateUpdatesToNow()
+        {
+            var cacheConnectionMock = new Mock<ICacheConnection>();
+            var deploymentManager = new DeploymentManager(cacheConnectionMock.Object);
+            var site = deploymentManager.CreateDeployedSite();
+            Assert.AreEqual(site.CreationDateInUtc.Date, DateTime.UtcNow.Date);
         }
     }
 }

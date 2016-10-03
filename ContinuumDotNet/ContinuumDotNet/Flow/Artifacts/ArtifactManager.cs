@@ -14,7 +14,7 @@ namespace ContinuumDotNet.Flow.Artifacts
         public ArtifactManager(IContinuumConnection continuumConnection)
         {
             Connection = continuumConnection;
-             _restRequest = new RestRequest($"{Constants.API_PATH}/{Endpoints.GET_ARTIFACTS}", Method.GET);
+             _restRequest = new RestRequest($"{Constants.ContinuumApiPath}/{Endpoints.GET_ARTIFACTS}", Method.GET);
         }
 
         public IArtifactManager WithName(string name)

@@ -16,6 +16,8 @@ namespace ContinuumDotNet.Interfaces.Deployments
         IDeployedSite WithProduct(string product);
         IDeployedSite WithFlightCode(string flightCode);
         IDeployedSite WithServerName(string serverName);
+        IDeployedSite WithBranchName(string branchName);
+        IDeployedSite WithCreationDateInUtc (DateTime creationDateTimeInUtc);
         IDeployedSite Deploy();
         IDeployedSite Uninstall();
     }

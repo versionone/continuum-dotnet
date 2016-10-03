@@ -11,5 +11,8 @@ namespace ContinuumDotNet.Interfaces.Deployments
         IDeploymentManager WithServer(string serverName);
         IDeploymentManager WithFlightCode(string serverName);
         List<IDeployedSite> GetAll();
+        List<string> GetAvailableServers();
+        void AddServer(string serverName);
+        void RemoveServer(string serverName);
     }
 }

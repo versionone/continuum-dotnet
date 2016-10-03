@@ -13,12 +13,17 @@ namespace ContinuumDotNet.Deployments
     public class DeployedSite : IDeployedSite
     {
         public string FlightCode { get; set; }
-        public DateTime CreationDateInUtc { get; }
+        public DateTime CreationDateInUtc { get; set; }
         public string BranchName { get; set; }
         public string ServerName { get; set; }
         public string Product { get; set; }
         public string Version { get; set; }
         protected ICacheConnection Cache { get; set; }
+
+        internal void SetCache(ICacheConnection cacheConnection)
+        {
+            Cache = cacheConnection;
+        }
 
         public IDeployedSite WithVersion(string versionName)
         {
@@ -44,6 +49,18 @@ namespace ContinuumDotNet.Deployments
             return this;
         }
 
+        public IDeployedSite WithBranchName(string branchName)
+        {
+            BranchName = branchName;
+            return this;
+        }
+
+        public IDeployedSite WithCreationDateInUtc(DateTime creationDateTimeInUtc)
+        {
+            CreationDateInUtc = creationDateTimeInUtc;
+            return this;
+        }
+
         public IDeployedSite Deploy()
         {
             if (string.IsNullOrEmpty(FlightCode) || string.IsNullOrEmpty(Version) || string.IsNullOrEmpty(ServerName) ||
@@ -51,21 +68,24 @@ namespace ContinuumDotNet.Deployments
             {
                 throw new MissingParameterException();
             }
-            Cache.PushLeft(FlightCode.AsFlightCodeKey(), $"{ServerName}:{Product}");
-            Cache.PushLeft(ServerName.AsServerKey(), $"{FlightCode}");
-            Cache.UpsertHash(FlightCode.AsSiteKey(), "Product", Product);
-            Cache.UpsertHash(FlightCode.AsSiteKey(), "Version", Version);
+            Cache.PushLeft(ServerName.AsServerKey(), $"{this.AsFlightCodeProductKey()}");
+            Cache.UpsertHash(this.AsFlightCodeProductKey(), this);
             return this;
         }
 
         public IDeployedSite Uninstall()
         {
-            throw new NotImplementedException();
+            Cache.RemoveListItem(ServerName.AsServerKey(), this.AsFlightCodeProductKey());
+            Cache.RemoveHash(this.AsFlightCodeProductKey());
+            return this;
         }
 
         internal static IDeployedSite Create(Container container)
         {
-            return new DeployedSite() {Cache = container.GetInstance<ICacheConnection>()};
-        }
+            return new DeployedSite()
+            {
+                CreationDateInUtc = DateTime.UtcNow, Cache = container.GetInstance<ICacheConnection>()
+            };
+        }    
     }
 }

@@ -21,7 +21,7 @@ namespace ContinuumDotNet.Flow.Pipelines
         public PipelineInstanceManager(IContinuumConnection continuumConnection)
         {
             Connection = continuumConnection;
-             _restRequest = new RestRequest($"{Constants.API_PATH}/{Endpoints.GET_PIPELINE_INSTANCE}", Method.GET);
+             _restRequest = new RestRequest($"{Constants.ContinuumApiPath}/{Endpoints.GET_PIPELINE_INSTANCE}", Method.GET);
         }
 
         public IPipelineInstanceManager ById(string id)

@@ -67,6 +67,7 @@
     <Compile Include="Deployments\CacheKeyExtensions.cs" />
     <Compile Include="Deployments\DeployedSite.cs" />
     <Compile Include="Deployments\DeploymentManager.cs" />
+    <Compile Include="Deployments\Installers\LifecycleInstaller.cs" />
     <Compile Include="Exceptions\ExceptionHandler.cs" />
     <Compile Include="Exceptions\Flow\InvalidPipelineIdException.cs" />
     <Compile Include="Exceptions\MissingParameterException.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Interfaces\Data\IHasQuery.cs" />
     <Compile Include="Interfaces\Deployments\IDeployedSite.cs" />
     <Compile Include="Interfaces\Deployments\IDeploymentManager.cs" />
+    <Compile Include="Interfaces\Deployments\Installers\ILifecycleInstaller.cs" />
     <Compile Include="Interfaces\Exceptions\IExceptionHandler.cs" />
     <Compile Include="Interfaces\Flow\Artifacts\IArtifact.cs" />
     <Compile Include="Interfaces\Flow\Artifacts\IArtifactManager.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="Interfaces\Flow\Pipelines\IPipelineInstance.cs" />
     <Compile Include="Interfaces\Flow\Pipelines\IPipelineInstanceManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\RedisUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
