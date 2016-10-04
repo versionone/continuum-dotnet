@@ -24,11 +24,10 @@ namespace ContinuumDotNetCLI
     {
         static void Main(string[] args)
         {
-            var remotePsRunner = new RemotePsRunner("dev", "continuum-windows", "", "lchost-12");
-
+            var remotePsRunner = new RemotePsRunner("dev", "continuum-windows", "PcfDu7d2El3jaZJYtuQ3", "lchost-12");
             var psResult = remotePsRunner.RunScript("Write-Output $env:computername");
 
-            var lifecycleInstaller = new LifecycleInstaller();
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunner);
             lifecycleInstaller.WithBaseArtifactoryUrl("http://artifactory/artifactory")
                 .WithBuildSupportFilesRepositoryName("lifecycle-build-support")
                 .WithConfigRepositoryFolderName("config-files")
@@ -42,6 +41,8 @@ namespace ContinuumDotNetCLI
                 .WithLicenseRespositoryFolderName("license-files")
                 .WithUserConfigFileName("user.Enterprise.config")
                 .Install();
+
+            lifecycleInstaller.WithServerName("lchost-12").WithVersion("16.0.3.1").Uninstall();
 
             CommonOptions commonOptions = new CommonOptions();
             Parser.Default.ParseArguments<CommonOptions>(args).MapResult((CommonOptions opts) =>
