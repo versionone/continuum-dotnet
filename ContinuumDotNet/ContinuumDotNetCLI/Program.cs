@@ -24,7 +24,7 @@ namespace ContinuumDotNetCLI
     {
         static void Main(string[] args)
         {
-            var remotePsRunner = new RemotePsRunner("dev", "continuum-windows", "PcfDu7d2El3jaZJYtuQ3", "lchost-12");
+            var remotePsRunner = new RemotePsRunner("dev", "continuum-windows", "", "lchost-12");
 
             var psResult = remotePsRunner.RunScript("Write-Output $env:computername");
 
