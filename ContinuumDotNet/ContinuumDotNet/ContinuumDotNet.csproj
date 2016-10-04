@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Naos.WinRM, Version=1.0.32.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Naos.WinRM.1.0.32\lib\net45\Naos.WinRM.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -49,6 +53,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Management.Automation.dll.10.0.10586.0\lib\net40\System.Management.Automation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,6 +75,7 @@
     <Compile Include="Deployments\CacheKeyExtensions.cs" />
     <Compile Include="Deployments\DeployedSite.cs" />
     <Compile Include="Deployments\DeploymentManager.cs" />
+    <Compile Include="Deployments\Installers\BaseInstaller.cs" />
     <Compile Include="Deployments\Installers\LifecycleInstaller.cs" />
     <Compile Include="Exceptions\ExceptionHandler.cs" />
     <Compile Include="Exceptions\Flow\InvalidPipelineIdException.cs" />
@@ -98,13 +107,19 @@
     <Compile Include="Interfaces\Flow\FlowPackages\IPackage.cs" />
     <Compile Include="Interfaces\Flow\Pipelines\IPipelineInstance.cs" />
     <Compile Include="Interfaces\Flow\Pipelines\IPipelineInstanceManager.cs" />
+    <Compile Include="Interfaces\Utilities\IPSResult.cs" />
+    <Compile Include="Interfaces\Utilities\IRemotePsRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\RemotePsRunner.cs" />
+    <Compile Include="Utilities\PsResult.cs" />
     <Compile Include="Utilities\RedisUtilities.cs" />
+    <Compile Include="Utilities\SecureStringExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Exceptions\Deployments\" />
     <Folder Include="Flow\Data\Builders\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

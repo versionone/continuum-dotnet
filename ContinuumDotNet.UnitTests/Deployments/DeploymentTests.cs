@@ -280,6 +280,63 @@ namespace ContinuumDotNet.UnitTests.Deployments
         }
 
         [TestMethod]
+        public void CallingWithDemoDataFilenameSetsDemoDataFilename()
+        {
+            const string demoDataFilename = "filename";
+            var lifecycleInstaller = new LifecycleInstaller().WithDemoDataFilename(demoDataFilename);
+            Assert.AreEqual(demoDataFilename, lifecycleInstaller.DemoDataFilename);
+        }
+
+        [TestMethod]
+        public void CanSetUserConfigFolderName()
+        {
+            const string userConfigFolderName = "userconfig";
+            var lifecycleInstaller = new LifecycleInstaller().WithUserConfigFolderName(userConfigFolderName);
+            Assert.AreEqual(userConfigFolderName, lifecycleInstaller.UserConfigFolderName);
+        }
+
+        [TestMethod]
+        public void CanSetUserConfigFilename()
+        {
+            const string userConfigFilename = "userconfigfilename";
+            var lifecycleInstaller = new LifecycleInstaller().WithUserConfigFileName(userConfigFilename);
+            Assert.AreEqual(userConfigFilename, lifecycleInstaller.UserConfigFileName);
+        }
+
+        [TestMethod]
+        public void CanSetDemoDataRepositoryFolderName()
+        {
+            const string demoDataRepositoryFolderName = "demodatafolder";
+            var lifecycleInstaller = new LifecycleInstaller().WithDemoDataRepositoryFolderName(demoDataRepositoryFolderName);
+            Assert.AreEqual(demoDataRepositoryFolderName, lifecycleInstaller.DemoDataRepositoryFolderName);
+        }
+
+        [TestMethod]
+        public void CanSetConfigRepositoryFolderName()
+        {
+            var configRepositoryFolderName = Guid.NewGuid().ToString();
+            var lifecycleInstaller = new LifecycleInstaller().WithConfigRepositoryFolderName(configRepositoryFolderName);
+            Assert.AreEqual(configRepositoryFolderName, lifecycleInstaller.ConfigRepositoryFolderName);
+        }
+
+        [TestMethod]
+        public void CanSetLicenseRepositoryFolderName()
+        {
+            var licenseRepositoryFolderName = Guid.NewGuid().ToString();;
+            var lifecycleInstaller = new LifecycleInstaller().WithLicenseRespositoryFolderName(licenseRepositoryFolderName);
+            Assert.AreEqual(licenseRepositoryFolderName, lifecycleInstaller.LicenseRespositoryFolderName);
+        }
+
+        [TestMethod]
+        public void CanSetInstallersRepositoryFolderName()
+        {
+            var installersRepositoryFolderName = Guid.NewGuid().ToString(); ;
+            var lifecycleInstaller = new LifecycleInstaller().WithInstallersRepositoryFolderName(installersRepositoryFolderName);
+            Assert.AreEqual(installersRepositoryFolderName, lifecycleInstaller.InstallersRepositoryFolderName);
+        }
+
+
+        [TestMethod]
         public void CanAddAParameter()
         {
             var parameter = "parameter";

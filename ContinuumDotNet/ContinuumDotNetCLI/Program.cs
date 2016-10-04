@@ -12,6 +12,11 @@ using ContinuumDotNet.Deployments.Installers;
 using ContinuumDotNet.Flow.Artifacts;
 using ContinuumDotNet.Flow.Pipelines;
 using ContinuumDotNetCLI.CommandLineOptions;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
+using System.Security;
+using ContinuumDotNet.Utilities;
+using Naos.WinRM;
 
 namespace ContinuumDotNetCLI
 {
@@ -19,8 +24,25 @@ namespace ContinuumDotNetCLI
     {
         static void Main(string[] args)
         {
+            var remotePsRunner = new RemotePsRunner("dev", "continuum-windows", "PcfDu7d2El3jaZJYtuQ3", "lchost-12");
+
+            var psResult = remotePsRunner.RunScript("Write-Output $env:computername");
+
             var lifecycleInstaller = new LifecycleInstaller();
-            lifecycleInstaller.WithVersion("test");
+            lifecycleInstaller.WithBaseArtifactoryUrl("http://artifactory/artifactory")
+                .WithBuildSupportFilesRepositoryName("lifecycle-build-support")
+                .WithConfigRepositoryFolderName("config-files")
+                .WithDemoDataRepositoryName("lifecycle-build-support")
+                .WithDemoDataRepositoryFolderName("demo-data")
+                .WithDemoDataFilename("EnterpriseDemo-160.bak")
+                .WithInstallerRepositoryName("lifecycle-installers")
+                .WithInstallersRepositoryFolderName("core/gulp")
+                .WithInstallerFilename("VersionOne.Setup-Ultimate-16.2.8.18.exe")
+                .WithLicenseFilename("VersionOne.Development.lic")
+                .WithLicenseRespositoryFolderName("license-files")
+                .WithTemporaryWorkFolder($"C:\\deployments\\{Guid.NewGuid()}")
+                .WithUserConfigFileName("user.Enterprise.config")
+                .Install();
 
             CommonOptions commonOptions = new CommonOptions();
             Parser.Default.ParseArguments<CommonOptions>(args).MapResult((CommonOptions opts) =>
