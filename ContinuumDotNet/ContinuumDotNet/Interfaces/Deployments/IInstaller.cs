@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ContinuumDotNet.Interfaces.Utilities;
 
 namespace ContinuumDotNet.Interfaces.Deployments
 {
@@ -20,6 +21,8 @@ namespace ContinuumDotNet.Interfaces.Deployments
         string UserConfigFileName { get; }
         string UserConfigFolderName { get; }
         string DemoDataRepositoryFolderName { get; }
+
+        IRemotePsRunner PsRunner { get; }
 
         string FlightCode { get; }
 

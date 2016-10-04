@@ -9,6 +9,7 @@ using ContinuumDotNet.Exceptions.Connection;
 using ContinuumDotNet.Exceptions.Flow;
 using ContinuumDotNet.Flow.Pipelines;
 using ContinuumDotNet.Interfaces.Connection;
+using ContinuumDotNet.Interfaces.Utilities;
 using ContinuumDotNet.UnitTests.TestData.Flow.Pipelines;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -177,56 +178,63 @@ namespace ContinuumDotNet.UnitTests.Deployments
         [TestMethod]
         public void CallingWithInstanceSetsInstance()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string instanceName = "testInstance";
-            var lifecycleInstaller = new LifecycleInstaller().WithInstance(instanceName);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithInstance(instanceName);
             Assert.AreEqual(instanceName, lifecycleInstaller.Instance);
         }
 
         [TestMethod]
         public void CallingWithProductSetsProduct()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string productName = "testProduct";
-            var lifecycleInstaller = new LifecycleInstaller().WithProduct(productName);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithProduct(productName);
             Assert.AreEqual(productName, lifecycleInstaller.Product);
         }
 
         [TestMethod]
         public void CallingWithVersionSetsVersion()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string version = "testVersion";
-            var lifecycleInstaller = new LifecycleInstaller().WithVersion(version);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithVersion(version);
             Assert.AreEqual(version, lifecycleInstaller.Version);
         }
 
         [TestMethod]
         public void CallingWithServerNameSetsServerName()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string serverName = "testserver";
-            var lifecycleInstaller = new LifecycleInstaller().WithServerName(serverName);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithServerName(serverName);
             Assert.AreEqual(serverName, lifecycleInstaller.ServerName);
         }
 
         [TestMethod]
         public void CallingWithFlightCodeSetsFlightCode()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string flightCode = "flightcode";
-            var lifecycleInstaller = new LifecycleInstaller().WithFlightCode(flightCode);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithFlightCode(flightCode);
             Assert.AreEqual(flightCode, lifecycleInstaller.FlightCode);
         }
 
         [TestMethod]
         public void CallingWithTemporaryWorkFolderSetsTemporaryWorkFolder()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string temporaryWorkFolder = @"c:\temp";
-            var lifecycleInstaller = new LifecycleInstaller().WithTemporaryWorkFolder(temporaryWorkFolder);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithTemporaryWorkFolder(temporaryWorkFolder);
             Assert.AreEqual(temporaryWorkFolder, lifecycleInstaller.TemporaryWorkFolder);
         }
 
         [TestMethod]
         public void CallingWithBaseArtifactoryUrlSetsWithBaseArtifactoryUrl()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string baseUrl = @"http://url";
-            var lifecycleInstaller = new LifecycleInstaller().WithBaseArtifactoryUrl(baseUrl);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithBaseArtifactoryUrl(baseUrl);
             Assert.AreEqual(baseUrl, lifecycleInstaller.BaseArtifactoryUrl);
         }
 
@@ -234,104 +242,117 @@ namespace ContinuumDotNet.UnitTests.Deployments
         [ExpectedException(typeof (MissingOrInvalidUrlException))]
         public void CallingWithBaseArtifactoryUrlWithABadUrlThrowsMissingOrInvalidUrlException()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string baseUrl = @"httpThisshouldnotwork";
-            var lifecycleInstaller = new LifecycleInstaller().WithBaseArtifactoryUrl(baseUrl);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithBaseArtifactoryUrl(baseUrl);
             Assert.AreEqual(baseUrl, lifecycleInstaller.BaseArtifactoryUrl);
         }
 
         [TestMethod]
         public void CallingWithDemoDataRepositoryNameSetsDemoDataRepositoryName()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string demoDataRepositoryName = @"demo-data-repo";
-            var lifecycleInstaller = new LifecycleInstaller().WithDemoDataRepositoryName(demoDataRepositoryName);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithDemoDataRepositoryName(demoDataRepositoryName);
             Assert.AreEqual(demoDataRepositoryName, lifecycleInstaller.DemoDataRepositoryName);
         }
 
         [TestMethod]
         public void CallingWithInstallerRepositoryNameSetsInstallerRepositoryName()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string installerRepositoryName = @"installer-repo";
-            var lifecycleInstaller = new LifecycleInstaller().WithInstallerRepositoryName(installerRepositoryName);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithInstallerRepositoryName(installerRepositoryName);
             Assert.AreEqual(installerRepositoryName, lifecycleInstaller.InstallerRepositoryName);
         }
 
         [TestMethod]
         public void CallingWithBuildSupportFilesRepositoryNameSetsBuildSupprtFilesRepositoryName()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string buildSupportFilesRepositoryName = @"build-support-repo";
-            var lifecycleInstaller = new LifecycleInstaller().WithBuildSupportFilesRepositoryName(buildSupportFilesRepositoryName);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithBuildSupportFilesRepositoryName(buildSupportFilesRepositoryName);
             Assert.AreEqual(buildSupportFilesRepositoryName, lifecycleInstaller.BuildSupportFilesRepositoryName);
         }
 
         [TestMethod]
         public void CallingWithLicenseFilenameSetsLicenseFilename()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string licenseFilename = @"license";
-            var lifecycleInstaller = new LifecycleInstaller().WithLicenseFilename(licenseFilename);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithLicenseFilename(licenseFilename);
             Assert.AreEqual(licenseFilename, lifecycleInstaller.LicenseFilename);
         }
 
         [TestMethod]
         public void CallingWithInstallerFilenameSetsInstallerFilename()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string installerFilename = "filename";
-            var lifecycleInstaller = new LifecycleInstaller().WithInstallerFilename(installerFilename);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithInstallerFilename(installerFilename);
             Assert.AreEqual(installerFilename, lifecycleInstaller.InstallerFilename);
         }
 
         [TestMethod]
         public void CallingWithDemoDataFilenameSetsDemoDataFilename()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string demoDataFilename = "filename";
-            var lifecycleInstaller = new LifecycleInstaller().WithDemoDataFilename(demoDataFilename);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithDemoDataFilename(demoDataFilename);
             Assert.AreEqual(demoDataFilename, lifecycleInstaller.DemoDataFilename);
         }
 
         [TestMethod]
         public void CanSetUserConfigFolderName()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string userConfigFolderName = "userconfig";
-            var lifecycleInstaller = new LifecycleInstaller().WithUserConfigFolderName(userConfigFolderName);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithUserConfigFolderName(userConfigFolderName);
             Assert.AreEqual(userConfigFolderName, lifecycleInstaller.UserConfigFolderName);
         }
 
         [TestMethod]
         public void CanSetUserConfigFilename()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string userConfigFilename = "userconfigfilename";
-            var lifecycleInstaller = new LifecycleInstaller().WithUserConfigFileName(userConfigFilename);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithUserConfigFileName(userConfigFilename);
             Assert.AreEqual(userConfigFilename, lifecycleInstaller.UserConfigFileName);
         }
 
         [TestMethod]
         public void CanSetDemoDataRepositoryFolderName()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             const string demoDataRepositoryFolderName = "demodatafolder";
-            var lifecycleInstaller = new LifecycleInstaller().WithDemoDataRepositoryFolderName(demoDataRepositoryFolderName);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithDemoDataRepositoryFolderName(demoDataRepositoryFolderName);
             Assert.AreEqual(demoDataRepositoryFolderName, lifecycleInstaller.DemoDataRepositoryFolderName);
         }
 
         [TestMethod]
         public void CanSetConfigRepositoryFolderName()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             var configRepositoryFolderName = Guid.NewGuid().ToString();
-            var lifecycleInstaller = new LifecycleInstaller().WithConfigRepositoryFolderName(configRepositoryFolderName);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithConfigRepositoryFolderName(configRepositoryFolderName);
             Assert.AreEqual(configRepositoryFolderName, lifecycleInstaller.ConfigRepositoryFolderName);
         }
 
         [TestMethod]
         public void CanSetLicenseRepositoryFolderName()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             var licenseRepositoryFolderName = Guid.NewGuid().ToString();;
-            var lifecycleInstaller = new LifecycleInstaller().WithLicenseRespositoryFolderName(licenseRepositoryFolderName);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithLicenseRespositoryFolderName(licenseRepositoryFolderName);
             Assert.AreEqual(licenseRepositoryFolderName, lifecycleInstaller.LicenseRespositoryFolderName);
         }
 
         [TestMethod]
         public void CanSetInstallersRepositoryFolderName()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             var installersRepositoryFolderName = Guid.NewGuid().ToString(); ;
-            var lifecycleInstaller = new LifecycleInstaller().WithInstallersRepositoryFolderName(installersRepositoryFolderName);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithInstallersRepositoryFolderName(installersRepositoryFolderName);
             Assert.AreEqual(installersRepositoryFolderName, lifecycleInstaller.InstallersRepositoryFolderName);
         }
 
@@ -339,9 +360,10 @@ namespace ContinuumDotNet.UnitTests.Deployments
         [TestMethod]
         public void CanAddAParameter()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             var parameter = "parameter";
             var value = "value";
-            var lifecycleInstaller = new LifecycleInstaller().WithAdditionalParameter(parameter, value);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithAdditionalParameter(parameter, value);
             Assert.IsTrue(lifecycleInstaller.AdditionalParameters.ContainsKey(parameter) &&
                           lifecycleInstaller.AdditionalParameters.Count == 1 &&
                           lifecycleInstaller.AdditionalParameters[parameter].Equals(value));;
@@ -350,10 +372,11 @@ namespace ContinuumDotNet.UnitTests.Deployments
         [TestMethod]
         public void AddingAParameterTwiceOverwritesPreviousValue()
         {
+            var remotePsRunnerMock = new Mock<IRemotePsRunner>();
             var parameter = "parameter";
             var oldValue = "vaoldlue";
             var newValue = "newvalue";
-            var lifecycleInstaller = new LifecycleInstaller().WithAdditionalParameter(parameter, oldValue);
+            var lifecycleInstaller = new LifecycleInstaller(remotePsRunnerMock.Object).WithAdditionalParameter(parameter, oldValue);
             lifecycleInstaller.WithAdditionalParameter(parameter, newValue);
             Assert.IsTrue(lifecycleInstaller.AdditionalParameters.ContainsKey(parameter) &&
                           lifecycleInstaller.AdditionalParameters.Count == 1 &&

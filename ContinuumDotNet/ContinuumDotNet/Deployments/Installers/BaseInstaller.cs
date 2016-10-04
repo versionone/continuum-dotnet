@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ContinuumDotNet.Exceptions.Connection;
 using ContinuumDotNet.Interfaces.Deployments;
+using ContinuumDotNet.Interfaces.Utilities;
+using ContinuumDotNet.Utilities;
+using ContinuumDotNet.Utilities.Extensions;
 
 namespace ContinuumDotNet.Deployments.Installers
 {
@@ -31,6 +34,14 @@ namespace ContinuumDotNet.Deployments.Installers
         private string _installersRepositoryFolder;
         private string _userConfigFolderName;
         private string _demoDataRepositoryFolderName;
+        private readonly IRemotePsRunner _psRunner;
+
+
+        public BaseInstaller(IRemotePsRunner remotePsRunner)
+        {
+            _temporaryWorkFolder = Path.Combine("c:\\deployments", Guid.NewGuid().ToString());
+            _psRunner = remotePsRunner;
+        }
 
         public string DemoDataFilename
         {
@@ -50,6 +61,11 @@ namespace ContinuumDotNet.Deployments.Installers
         public string DemoDataRepositoryFolderName
         {
             get { return _demoDataRepositoryFolderName; }
+        }
+
+        public IRemotePsRunner PsRunner
+        {
+            get { return _psRunner; }
         }
 
         public string FlightCode
@@ -275,8 +291,8 @@ namespace ContinuumDotNet.Deployments.Installers
             {
                 SetupWorkspace();
                 DownloadArtifacts();
-                DeployDemoData();
-                RunInstaller();
+                //DeployDemoData();
+                //RunInstaller();
             }
             catch (Exception ex)
             {
@@ -296,23 +312,76 @@ namespace ContinuumDotNet.Deployments.Installers
 
         public virtual void SetupWorkspace()
         {
-            Directory.CreateDirectory(TemporaryWorkFolder);
+            _psRunner.RunScript($"New-Item  -Force -ItemType directory -Path {TemporaryWorkFolder}");
+        }
+
+        protected string LicenceFileUrl
+        {
+            get
+            {
+                var licenseFileUrl = $"{BaseArtifactoryUrl}/{BuildSupportFilesRepositoryName}/{LicenseRespositoryFolderName}/{LicenseFilename}";
+                return !licenseFileUrl.IsValidUrl() ? string.Empty : licenseFileUrl;
+            }
+        }
+
+        protected string DemoDataFileUrl
+        {
+            get
+            {
+                var url = $"{BaseArtifactoryUrl}/{DemoDataRepositoryName}/{DemoDataRepositoryFolderName}/{_demoDataFilename}";
+                return !url.IsValidUrl() ? string.Empty : url;
+            }
+        }
+
+        protected string InstallerUrl
+        {
+            get
+            {
+                var url = $"{BaseArtifactoryUrl}/{InstallerRepositoryName}/{InstallersRepositoryFolderName}/{_installerFilename}";
+                return !url.IsValidUrl() ? string.Empty : url;
+            }
+        }
+
+        protected string UserConfigUrl
+        {
+            get
+            {
+                var url = $"{BaseArtifactoryUrl}/{BuildSupportFilesRepositoryName}/{ConfigRepositoryFolderName}/{_userConfigFileName}";
+                return !url.IsValidUrl() ? string.Empty : url;
+            }
         }
 
         public virtual void DownloadArtifacts()
         {
-            var webClient = new WebClient();
-            var licenseFileUrl = $"{BaseArtifactoryUrl}/{BuildSupportFilesRepositoryName}/{LicenseRespositoryFolderName}/{LicenseFilename}";
-            webClient.DownloadFile(new Uri(licenseFileUrl), Path.Combine(TemporaryWorkFolder, _licenseFilename));
+            var scriptStringBuilder = new StringBuilder();
+            var webClientName = "$client";
+            scriptStringBuilder.AppendLine($"{webClientName} = New-Object System.Net.WebClient");
+            if (LicenceFileUrl.IsValidUrl())
+            {
+                scriptStringBuilder.AppendLine(RemotePsRunner.CreateDownloadCommand(webClientName, LicenceFileUrl,
+                    Path.Combine(TemporaryWorkFolder, _licenseFilename)));
+            }
 
-            var demoDataFileUrl = $"{BaseArtifactoryUrl}/{DemoDataRepositoryName}/{DemoDataRepositoryFolderName}/{_demoDataFilename}";
-            webClient.DownloadFile(new Uri(demoDataFileUrl), Path.Combine(TemporaryWorkFolder, _demoDataFilename));
+            if (DemoDataFileUrl.IsValidUrl())
+            {
+                scriptStringBuilder.AppendLine(RemotePsRunner.CreateDownloadCommand(webClientName, DemoDataFileUrl,
+                    Path.Combine(TemporaryWorkFolder, _demoDataFilename)));
+            }
 
-            var installerUrl = $"{BaseArtifactoryUrl}/{InstallerRepositoryName}/{InstallersRepositoryFolderName}/{_installerFilename}";
-            webClient.DownloadFile(new Uri(installerUrl), Path.Combine(TemporaryWorkFolder, _installerFilename));
+            if (InstallerUrl.IsValidUrl())
+            {
+                scriptStringBuilder.AppendLine(RemotePsRunner.CreateDownloadCommand(webClientName, InstallerUrl,
+                    Path.Combine(TemporaryWorkFolder, _installerFilename)));
+            }
 
-            var userConfigUrl = $"{BaseArtifactoryUrl}/{BuildSupportFilesRepositoryName}/{ConfigRepositoryFolderName}/{_userConfigFileName}";
-            webClient.DownloadFile(new Uri(userConfigUrl), Path.Combine(TemporaryWorkFolder, _userConfigFileName));
+            if (UserConfigUrl.IsValidUrl())
+            {
+                scriptStringBuilder.AppendLine(RemotePsRunner.CreateDownloadCommand(webClientName, UserConfigUrl,
+                    Path.Combine(TemporaryWorkFolder, _userConfigFileName)));
+            }
+
+            _psRunner.RunScript(scriptStringBuilder.ToString());
+
         }
 
         public virtual void DownloadBuildSupportFiles()
@@ -329,7 +398,7 @@ namespace ContinuumDotNet.Deployments.Installers
 
         public virtual void CleanupWorkspace()
         {
+            _psRunner.RunScript($"Remove-Item {TemporaryWorkFolder} -Recurse -Force");
         }
     }
 }
-

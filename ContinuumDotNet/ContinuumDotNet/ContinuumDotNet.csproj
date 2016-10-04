@@ -110,6 +110,8 @@
     <Compile Include="Interfaces\Utilities\IPSResult.cs" />
     <Compile Include="Interfaces\Utilities\IRemotePsRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Extensions\CommonExtensions.cs" />
+    <Compile Include="Utilities\Extensions\RemotePsRunnerExtensions.cs" />
     <Compile Include="Utilities\RemotePsRunner.cs" />
     <Compile Include="Utilities\PsResult.cs" />
     <Compile Include="Utilities\RedisUtilities.cs" />

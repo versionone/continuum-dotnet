@@ -58,5 +58,10 @@ namespace ContinuumDotNet.Utilities
             }
             return result;
         }
+
+        public static string CreateDownloadCommand(string clientVariable, string source, string target)
+        {
+            return $"{clientVariable}.DownloadFile(\"{source}\", \"{target}\")";
+        }
     }
 }
