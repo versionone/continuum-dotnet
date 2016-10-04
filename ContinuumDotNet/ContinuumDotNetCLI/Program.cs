@@ -16,7 +16,6 @@ using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Security;
 using ContinuumDotNet.Utilities;
-using Naos.WinRM;
 
 namespace ContinuumDotNetCLI
 {

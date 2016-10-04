@@ -6,7 +6,6 @@ using System.Management.Automation.Runspaces;
 using System.Text;
 using System.Threading.Tasks;
 using ContinuumDotNet.Interfaces.Utilities;
-using Naos.WinRM;
 
 namespace ContinuumDotNet.Utilities
 {
