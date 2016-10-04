@@ -40,7 +40,6 @@ namespace ContinuumDotNetCLI
                 .WithInstallerFilename("VersionOne.Setup-Ultimate-16.2.8.18.exe")
                 .WithLicenseFilename("VersionOne.Development.lic")
                 .WithLicenseRespositoryFolderName("license-files")
-                .WithTemporaryWorkFolder($"C:\\deployments\\{Guid.NewGuid()}")
                 .WithUserConfigFileName("user.Enterprise.config")
                 .Install();
 
